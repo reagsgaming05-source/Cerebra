@@ -1,0 +1,406 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+  ============================================================
+  Cerebra — Design system foundation
+  Direction artistique : clay chaud / crème (cf. Cerebra.dc.html)
+  - Titres : Bricolage Grotesque (--font-bricolage)
+  - Corps  : Hanken Grotesk (--font-hanken)
+  - Mono   : DM Mono (--font-dm-mono)
+  - Ombres offset néo-brutalistes, texture grain, micro-interactions
+  Les tokens shadcn sont remappés sur la palette clay afin que les
+  écrans existants héritent de l'identité sans être réécrits.
+  ============================================================
+*/
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-hanken);
+  --font-mono: var(--font-dm-mono);
+  --font-heading: var(--font-bricolage);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-gold: var(--gold);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  /* ---- Palette clay (light) ---- */
+  --bg: #F2E9DA;
+  --surface: #FBF6EC;
+  --surface-2: #F3E9D6;
+  --ink: #221C17;
+  --ink-2: #473A2E;
+  --muted: #7A6B5C;
+  --muted-ink: #4A3D30;
+  --line: #E6DAC6;
+  --clay: #CC6B43;
+  --clay-deep: #B0512E;
+  --gold: #E5A52C;
+  --sage: #4E8B57;
+  --crimson: #BE3A2B;
+  --petrol: #2B6C68;
+
+  /* ---- Easings ---- */
+  --ease-out: cubic-bezier(0.21, 0.71, 0.18, 1);
+  --ease-stamp: cubic-bezier(0.7, -0.2, 0.3, 1.5);
+
+  /* ---- Tokens shadcn mappés sur clay ---- */
+  --background: var(--bg);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--clay);
+  --primary-foreground: #FBF6EC;
+  --secondary: var(--surface-2);
+  --secondary-foreground: var(--ink-2);
+  --muted: var(--surface-2);
+  --muted-foreground: var(--muted-ink);
+  --accent: var(--surface-2);
+  --accent-foreground: var(--clay-deep);
+  --destructive: var(--crimson);
+  --destructive-foreground: #FBF6EC;
+  --success: var(--sage);
+  --success-foreground: #FBF6EC;
+  --warning: var(--gold);
+  --warning-foreground: var(--ink);
+  --gold: var(--gold);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--clay);
+  --chart-1: var(--clay);
+  --chart-2: var(--sage);
+  --chart-3: var(--gold);
+  --chart-4: var(--petrol);
+  --chart-5: var(--crimson);
+  --radius: 0.7rem;
+  --sidebar: var(--surface);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--clay);
+  --sidebar-primary-foreground: #FBF6EC;
+  --sidebar-accent: var(--surface-2);
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: var(--line);
+  --sidebar-ring: var(--clay);
+}
+
+.dark {
+  /* ---- Palette clay (dark) ---- */
+  --bg: #191310;
+  --surface: #241B15;
+  --surface-2: #2E231B;
+  --ink: #F4EBDC;
+  --ink-2: #F4EBDC;
+  --muted: #A8957F;
+  --muted-ink: #C9B79E;
+  --line: #3A2C22;
+  --clay: #E2855C;
+  --clay-deep: #C96A41;
+  --gold: #F0BA50;
+  --sage: #6FB06E;
+  --crimson: #E0685A;
+  --petrol: #4FA39C;
+
+  /* ---- Tokens shadcn mappés sur clay (dark) ---- */
+  --background: var(--bg);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--clay);
+  --primary-foreground: var(--bg);
+  --secondary: var(--surface-2);
+  --secondary-foreground: var(--ink);
+  --muted: var(--surface-2);
+  --muted-foreground: var(--muted-ink);
+  --accent: var(--surface-2);
+  --accent-foreground: var(--clay);
+  --destructive: var(--crimson);
+  --destructive-foreground: var(--bg);
+  --success: var(--sage);
+  --success-foreground: var(--bg);
+  --warning: var(--gold);
+  --warning-foreground: var(--bg);
+  --gold: var(--gold);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--clay);
+  --chart-1: var(--clay);
+  --chart-2: var(--sage);
+  --chart-3: var(--gold);
+  --chart-4: var(--petrol);
+  --chart-5: var(--crimson);
+  --sidebar: var(--surface);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--clay);
+  --sidebar-primary-foreground: var(--bg);
+  --sidebar-accent: var(--surface-2);
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: var(--line);
+  --sidebar-ring: var(--clay);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+  /* Display type : Bricolage Grotesque pour la hiérarchie de titres */
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-bricolage), var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  }
+  /* Micro-interaction signature : léger enfoncement au tap */
+  button,
+  [data-press] {
+    transition: transform 0.09s var(--ease-out);
+  }
+  button:active,
+  [data-press]:active {
+    transform: scale(0.97);
+  }
+}
+
+@layer components {
+  /* Carte néo-brutaliste : bordure encre + ombre offset encre */
+  .cb-card {
+    background: var(--surface);
+    border: 2px solid var(--ink);
+    border-radius: 18px;
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+  /* Variante douce : bordure ligne + ombre teintée clay */
+  .cb-card-line {
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: 18px;
+    box-shadow: 0 6px 18px -10px color-mix(in oklab, var(--clay) 60%, transparent);
+  }
+  /* Bouton signature : bordure encre + ombre offset clay */
+  .cb-btn {
+    border: 2.5px solid var(--ink);
+    border-radius: 14px;
+    font-family: var(--font-bricolage), sans-serif;
+    font-weight: 700;
+    box-shadow: 4px 4px 0 var(--clay);
+    background: var(--surface);
+    color: var(--ink);
+  }
+  .cb-btn:active {
+    box-shadow: 1px 1px 0 var(--clay);
+  }
+  .cb-btn-primary {
+    background: var(--ink);
+    color: var(--bg);
+    box-shadow: 4px 4px 0 var(--clay);
+  }
+  .cb-btn-primary:active {
+    box-shadow: 1px 1px 0 var(--clay);
+  }
+  /* Pilule (onglets, tris) */
+  .cb-pill {
+    border: 2px solid var(--line);
+    border-radius: 999px;
+    font-weight: 700;
+    background: var(--surface);
+    color: var(--muted-ink);
+  }
+  .cb-pill[data-active="true"] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+  /* Stamp mono incliné (labels, badges) */
+  .cb-stamp {
+    display: inline-block;
+    font-family: var(--font-dm-mono), ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--clay);
+    border: 1.5px solid var(--clay);
+    border-radius: 6px;
+    padding: 3px 9px;
+    transform: rotate(-1.5deg);
+  }
+  /* Texture grain subtile (superposer sur un parent positionné) */
+  .cb-grain {
+    position: relative;
+  }
+  .cb-grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  /* Pictogramme carré à coin coupé (icônes de cours, badges) */
+  .cb-tile {
+    border-radius: 16px 16px 16px 6px;
+    transform: rotate(-2deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: var(--font-bricolage), var(--font-hanken), sans-serif;
+  }
+  .cb-mono {
+    font-family: var(--font-dm-mono), ui-monospace, monospace;
+  }
+  .cb-shadow-ink {
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+  .cb-shadow-clay {
+    box-shadow: 4px 4px 0 var(--clay);
+  }
+
+  @keyframes cbFloat {
+    from { transform: translateY(11px); }
+    to { transform: translateY(0); }
+  }
+  .animate-cb-float { animation: cbFloat 0.4s ease both; }
+
+  @keyframes cbPop {
+    0% { transform: scale(0.9); }
+    55% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+  }
+  .animate-cb-pop { animation: cbPop 0.3s var(--ease-out) both; }
+
+  @keyframes cbPulse {
+    0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--clay) 45%, transparent); }
+    50% { box-shadow: 0 0 0 7px transparent; }
+  }
+  .animate-cb-pulse { animation: cbPulse 2s infinite; }
+
+  @keyframes cbShimmer {
+    0% { background-position: -300px 0; }
+    100% { background-position: 300px 0; }
+  }
+  .animate-cb-shimmer {
+    background-size: 600px 100%;
+    animation: cbShimmer 1.4s infinite linear;
+  }
+
+  @keyframes cbSheet {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  .animate-cb-sheet { animation: cbSheet 0.38s var(--ease-out) both; }
+
+  @keyframes cbFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .animate-cb-fade { animation: cbFade 0.2s ease both; }
+
+  @keyframes cbShake {
+    0% { transform: translateX(0); }
+    15% { transform: translateX(-9px); }
+    30% { transform: translateX(8px); }
+    45% { transform: translateX(-7px); }
+    60% { transform: translateX(6px); }
+    75% { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
+  }
+  .animate-cb-shake { animation: cbShake 0.45s ease-in-out both; }
+
+  @keyframes cbSpin {
+    to { transform: rotate(360deg); }
+  }
+  .animate-cb-spin { animation: cbSpin 0.8s linear infinite; }
+
+  /* Héritages d'avant : garder les utilitaires existants */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in oklch, var(--foreground) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklch, var(--foreground) 6%, transparent) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  @keyframes pop-in {
+    0% { transform: scale(0.85); opacity: 0; }
+    60% { transform: scale(1.04); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .animate-pop-in {
+    animation: pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes float-up {
+    0% { transform: translateY(8px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  .animate-float-up {
+    animation: float-up 0.4s ease both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
