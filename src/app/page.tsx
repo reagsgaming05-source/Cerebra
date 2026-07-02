@@ -200,6 +200,64 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Cercle Privé — invitation discrète, DA luxe */}
+        <Link
+          href="/cercle-prive"
+          data-press
+          aria-label="Découvrir le Cercle Privé"
+          className="cb-grain group relative mb-4 block overflow-hidden rounded-[20px]"
+          style={{
+            background: "#14100B",
+            border: "1px solid rgba(203,163,90,0.28)",
+          }}
+        >
+          {/* halo doré */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(80% 120% at 100% 0%, rgba(203,163,90,0.16) 0%, rgba(203,163,90,0) 60%)",
+            }}
+          />
+          <div className="relative flex items-center gap-4 px-5 py-4">
+            {/* Sceau monogramme */}
+            <span
+              className="flex h-11 w-11 flex-none items-center justify-center rounded-full font-heading text-[15px] font-extrabold tracking-[0.5px]"
+              style={{
+                color: "#E8CE94",
+                border: "1px solid #CBA35A",
+              }}
+            >
+              CP
+            </span>
+            <div className="min-w-0 flex-1">
+              <span
+                className="cb-mono block text-[9.5px] uppercase tracking-[3px]"
+                style={{ color: "#CBA35A" }}
+              >
+                Sur invitation
+              </span>
+              <span
+                className="mt-1 block font-heading text-[18px] font-extrabold tracking-[-0.3px]"
+                style={{ color: "#F3EAD8" }}
+              >
+                Cercle Privé
+              </span>
+            </div>
+            {/* Petit mot cliquable */}
+            <span
+              className="flex flex-none items-center gap-1.5 text-[13px] font-bold tracking-[0.3px] transition-transform group-hover:translate-x-0.5"
+              style={{ color: "#E8CE94" }}
+            >
+              Entrer
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </span>
+          </div>
+        </Link>
+
         {/* Rappel SRS */}
         {(() => {
           const totalDue = courses.reduce((s, c) => s + dueCards(c.flashcards ?? []).length, 0);
