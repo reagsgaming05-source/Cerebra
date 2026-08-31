@@ -4,6 +4,10 @@
 
 ---
 
+> **Val d'Ambre** — un jeu de ferme en pixel art (style *Stardew Valley*), destiné à
+> une sortie Steam, vit dans [`game/`](game/). Il est indépendant de l'application
+> Cerebra : voir [`game/README.md`](game/README.md).
+
 ## Fonctionnalités
 
 ### Import de cours

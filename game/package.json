@@ -1,0 +1,22 @@
+{
+  "name": "val-dambre",
+  "productName": "Val d'Ambre",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Jeu de ferme et de vie de village en pixel art, dans l'esprit de Stardew Valley.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "tauri": "tauri",
+    "desktop:dev": "tauri dev",
+    "desktop:build": "tauri build"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.9.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.14"
+  }
+}

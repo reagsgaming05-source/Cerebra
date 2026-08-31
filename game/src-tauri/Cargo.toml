@@ -1,0 +1,25 @@
+[package]
+name = "val-dambre"
+version = "0.1.0"
+description = "Val d'Ambre — jeu de ferme et de vie de village"
+authors = ["Val d'Ambre"]
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "val_dambre_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+
+# Binaire compact : le jeu est distribué tel quel, sans symboles de débogage.
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

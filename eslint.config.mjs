@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Le jeu Steam a sa propre configuration TypeScript et son propre lint.
+    "game/**",
   ]),
 ]);
 

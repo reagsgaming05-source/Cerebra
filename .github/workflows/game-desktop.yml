@@ -1,0 +1,66 @@
+name: Build Val d'Ambre (desktop)
+
+# Les exécutables Steam ne se compilent pas de façon croisée : chaque système
+# doit être construit sur son propre runner.
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "game-v*"
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            label: linux
+          - os: windows-latest
+            label: windows
+          - os: macos-latest
+            label: macos
+
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: game
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: game/package-lock.json
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: swatinem/rust-cache@v2
+        with:
+          workspaces: game/src-tauri
+
+      - name: Dépendances système (Linux)
+        if: matrix.label == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev \
+            librsvg2-dev patchelf libgtk-3-dev
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Vérifier les types
+        run: npm run typecheck
+
+      - name: Construire l'exécutable
+        run: npm run desktop:build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: val-dambre-${{ matrix.label }}
+          path: |
+            game/src-tauri/target/release/bundle/**
+            game/src-tauri/target/release/val-dambre*
+          if-no-files-found: warn
