@@ -834,8 +834,25 @@ export function QuizActivity({ course, updateCourse, onComplete, node }: ActProp
   }, [questions, finished, answered]);
 
   async function generate() {
-    setLoading(true);
     setTimeLeft(timerSeconds);
+    // Cours du catalogue : questions rédigées à la main, tirées au hasard
+    // (ordre des questions et des réponses mélangé à chaque partie).
+    if (course.quizBank && course.quizBank.length > 0) {
+      const picked = shuffle(course.quizBank)
+        .slice(0, Math.min(count, course.quizBank.length))
+        .map((q) => {
+          const order = shuffle(q.options.map((_, i) => i));
+          return {
+            ...q,
+            options: order.map((i) => q.options[i]),
+            answerIndex: order.indexOf(q.answerIndex),
+          };
+        });
+      setQuestions(picked);
+      updateCourse({ quizRuns: course.quizRuns + 1 });
+      return;
+    }
+    setLoading(true);
     const t = toast.loading("Génération du quiz…");
     try {
       const body: Record<string, unknown> = {
@@ -888,7 +905,11 @@ export function QuizActivity({ course, updateCourse, onComplete, node }: ActProp
           <Slider
             value={[count]}
             min={3}
-            max={Math.min(15, Math.max(3, course.slides.length))}
+            max={
+              course.quizBank?.length
+                ? Math.max(3, course.quizBank.length)
+                : Math.min(15, Math.max(3, course.slides.length))
+            }
             step={1}
             onValueChange={(v) => setCount(Array.isArray(v) ? v[0] : v)}
           />
@@ -2499,3 +2520,4 @@ export function TrueFalseActivity({ course, updateCourse, onComplete }: ActProps
     </div>
   );
 }
+

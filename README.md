@@ -45,6 +45,17 @@
 
 ---
 
+## Parcours scolaires suisses
+
+Cerebra propose aussi un **catalogue de contenus rédigés à la main**, de l'école obligatoire à l'université, accessible depuis la carte « Parcours scolaires » de l'accueil (`/parcours`).
+
+- **5 niveaux** : Cycle 1 (1-4H), Cycle 2 (5-8H), Cycle 3 (9-11H), Secondaire II (gymnase, ECG, CFC), Université & HES
+- **Branches par niveau** (maths, français, allemand, géographie, histoire, sciences, citoyenneté, chimie, statistiques, droit, économie…)
+- **Unités à débloquer** façon Duolingo : l'unité suivante s'ouvre quand la précédente est faite à 50 %
+- Chaque unité devient un cours classique avec son parcours (résumé, cartes, quiz, jeux) ; les quiz utilisent les questions rédigées, sans IA ni clé API
+
+Le contenu est dans `src/lib/curriculum/` (un fichier par niveau). Pour ajouter une unité, ajoute un objet `CatalogUnit` dans la branche voulue : diapositives, points clés, flashcards et questions de quiz.
+
 ## Démarrage rapide
 
 ```bash

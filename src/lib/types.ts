@@ -109,4 +109,8 @@ export interface Course {
   tags?: string[];
   /** Archivé (soft delete) */
   archived?: boolean;
+  /** Questions de quiz rédigées à la main (cours du catalogue) : pas de génération IA */
+  quizBank?: QuizQuestion[];
+  /** Référence à l'unité du catalogue suisse dont ce cours est issu */
+  catalog?: { levelId: string; subjectId: string; unitId: string };
 }
