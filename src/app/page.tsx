@@ -18,6 +18,7 @@ import { useOnboarding } from "@/lib/onboarding";
 import { courseMatches, sortCourses, type SortKey } from "@/lib/search";
 import { useSort } from "@/lib/settings";
 import { useCourses } from "@/lib/store";
+import { useSchoolLevel } from "@/lib/curriculum";
 import { useStreak } from "@/lib/streak";
 import { useDailyProgress } from "@/lib/daily-progress";
 import { toast } from "sonner";
@@ -48,6 +49,7 @@ const SORTS: { key: SortKey; label: string }[] = [
 
 export default function Home() {
   const { courses, ready, remove, togglePin, archive } = useCourses();
+  const { level: schoolLevel } = useSchoolLevel();
   const { streak } = useStreak();
   const { today, goal, pct, reached } = useDailyProgress();
   const { show: showOnboarding, dismiss: dismissOnboarding } = useOnboarding();
@@ -199,6 +201,28 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Parcours scolaires suisses */}
+        <Link
+          href="/parcours"
+          data-press
+          className="mb-4 flex items-center gap-3.5 rounded-[20px] border-2 border-[var(--ink)] bg-[var(--surface)] p-4 shadow-[3px_3px_0_var(--ink)]"
+        >
+          <span className="flex h-12 w-12 flex-none items-center justify-center rounded-[14px] bg-[var(--clay)] text-2xl">
+            {schoolLevel?.emoji ?? "🇨🇭"}
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block font-heading text-[16px] font-extrabold">
+              {schoolLevel ? `Parcours ${schoolLevel.name}` : "Parcours scolaires suisses"}
+            </span>
+            <span className="block text-[12.5px] text-[var(--muted-ink)]">
+              {schoolLevel
+                ? `${schoolLevel.grades} · continue ton parcours`
+                : "Du cycle 1 à l'université : choisis ton niveau et apprends"}
+            </span>
+          </span>
+          <span className="font-heading text-xl font-extrabold text-[var(--clay)]">→</span>
+        </Link>
 
         {/* Rappel SRS */}
         {(() => {
