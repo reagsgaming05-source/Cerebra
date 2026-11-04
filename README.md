@@ -68,7 +68,7 @@ echo "GEMINI_API_KEY=ta_cle_ici" > .env.local
 
 Obtiens une clé gratuitement sur [Google AI Studio](https://aistudio.google.com/apikey).
 
-En ligne (Netlify) : ajoute `GEMINI_API_KEY` dans *Site configuration → Environment variables*, puis redéploie.
+En ligne : ajoute `GEMINI_API_KEY` dans les variables d'environnement de l'hébergeur (Vercel : *Settings → Environment Variables* ; Netlify : *Site configuration → Environment variables*), puis redéploie.
 Pour vérifier que l'IA est bien branchée, ouvre `/api/ai-status` : la réponse doit contenir `"ok": true`.
 Le modèle par défaut est `gemini-flash-latest` ; la variable `GEMINI_MODEL` permet d'en choisir un autre.
 
