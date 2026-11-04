@@ -66,14 +66,18 @@ Sans clé, Cerebra utilise des générations déterministes (fallback). Pour l'I
 echo "GEMINI_API_KEY=ta_cle_ici" > .env.local
 ```
 
-Obtiens une clé gratuitement sur [Google AI Studio](https://aistudio.google.com/).
+Obtiens une clé gratuitement sur [Google AI Studio](https://aistudio.google.com/apikey).
+
+En ligne : ajoute `GEMINI_API_KEY` dans les variables d'environnement de l'hébergeur (Vercel : *Settings → Environment Variables* ; Netlify : *Site configuration → Environment variables*), puis redéploie.
+Pour vérifier que l'IA est bien branchée, ouvre `/api/ai-status` : la réponse doit contenir `"ok": true`.
+Le modèle par défaut est `gemini-flash-latest` ; la variable `GEMINI_MODEL` permet d'en choisir un autre.
 
 ---
 
 ## Stack technique
 
 - **Framework** : Next.js 16 (App Router), TypeScript, Tailwind v4
-- **IA** : Google Gemini 2.5 Flash (via `@google/genai`)
+- **IA** : Google Gemini Flash, offre gratuite (via `@google/genai`)
 - **Persistance** : localStorage navigateur (aucune base de données)
 - **PWA** : manifest + service worker pour installation et offline
 - **Dépendances principales** : `lucide-react` (icônes), `sonner` (toasts), `next-themes` (thème)

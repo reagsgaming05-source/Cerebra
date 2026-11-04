@@ -15,7 +15,11 @@ import {
 
 // Modèle Gemini. Flash est rapide, peu coûteux et largement suffisant pour
 // des résumés/flashcards/quiz. Disponible sur le free tier de Google AI Studio.
-const MODEL = "gemini-2.5-flash";
+// « gemini-flash-latest » suit le dernier Flash publié par Google ; GEMINI_MODEL
+// permet d'en fixer un autre sans toucher au code.
+export const MODEL = process.env.GEMINI_MODEL?.trim() || "gemini-flash-latest";
+// Si le modèle choisi n'existe pas (ou plus), on essaie celui-ci.
+const FALLBACK_MODEL = "gemini-2.5-flash";
 
 function client(): GoogleGenAI | null {
   const key = process.env.GEMINI_API_KEY;
@@ -39,11 +43,31 @@ function extractJson(text: string): string {
 
 /** Appelle Gemini et renvoie le texte brut de la réponse. */
 async function ask(ai: GoogleGenAI, prompt: string): Promise<string> {
-  const res = await ai.models.generateContent({
-    model: MODEL,
-    contents: prompt,
-  });
-  return res.text ?? "";
+  try {
+    const res = await ai.models.generateContent({ model: MODEL, contents: prompt });
+    return res.text ?? "";
+  } catch (e) {
+    if (MODEL === FALLBACK_MODEL || !isModelNotFound(e)) throw e;
+    const res = await ai.models.generateContent({ model: FALLBACK_MODEL, contents: prompt });
+    return res.text ?? "";
+  }
+}
+
+function isModelNotFound(e: unknown): boolean {
+  const msg = String((e as Error)?.message ?? e);
+  return /\b404\b|NOT_FOUND|not found|is not supported/i.test(msg);
+}
+
+/** Vérifie la connexion à Gemini (clé présente et modèle qui répond). */
+export async function checkGemini(): Promise<{ configured: boolean; ok: boolean; model: string; error?: string }> {
+  const c = client();
+  if (!c) return { configured: false, ok: false, model: MODEL, error: "GEMINI_API_KEY manquante." };
+  try {
+    const text = await ask(c, "Réponds seulement par le mot OK.");
+    return { configured: true, ok: /ok/i.test(text), model: MODEL };
+  } catch (e) {
+    return { configured: true, ok: false, model: MODEL, error: (e as Error).message };
+  }
 }
 
 /** Mélange un tableau (variabilité d'une génération à l'autre). */
